@@ -41,11 +41,11 @@
     <td align="left">{'Dimension popup Album'|@translate} : &nbsp;&nbsp;</td>
 </tr>
 <tr> 
-    <td align="left">{'Largeur '|@translate} : &nbsp;&nbsp;</td>
+    <td align="left">{'Largeur'|@translate} : &nbsp;&nbsp;</td>
     <td><input type="text" size="2" maxlength="3" name="larg" value="{$ALBUM_LA}">&nbsp;px</td>
 </tr>
 <tr>   
-    <td align="left">{'Hauteur '|@translate} : &nbsp;&nbsp;</td>
+    <td align="left">{'Hauteur'|@translate} : &nbsp;&nbsp;</td>
     <td><input type="text" size="2" maxlength="3" name="haut" value="{$ALBUM_HA}">&nbsp;px</td>
     </td>
   </tr>
