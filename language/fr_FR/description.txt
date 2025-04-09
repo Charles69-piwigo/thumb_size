@@ -1,0 +1,1 @@
+Modifier la dimension des miniatures dans la gestion par lot des photos

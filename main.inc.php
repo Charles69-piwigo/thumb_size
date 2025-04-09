@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: thumb_size
-Version: 1.0
+Version: 1.1
 Description: Choisir la dimension et la qualité des vignettes dans la gestion par lot
 Plugin URI:
 Author: Charles69
@@ -12,6 +12,9 @@ Has Settings: webmaster
 // ============  VERSIONS =========================================================
  // historique des versions
  /*
+
+  version 1.1 - 09/04/2025 (diffusé)
+  corrigé conflit avec le plugin Add_head_element
 
   version 1.0 - 04/04/2025  (diffusé)
   ajout de 'Reinitialiser' qui rétablit les valeurs originales et le fichier php
@@ -40,8 +43,8 @@ define('TBS_PATH' , PHPWG_PLUGINS_PATH . TBS_DIR . '/');
 //define('TBS_ADMIN' , get_root_url().'admin.php?page=plugin-'.TBS_DIR);
 
 
-add_event_handler('loading_lang', 'Add_head_element_loading_lang');	  
-function Add_head_element_loading_lang(){
+add_event_handler('loading_lang', 'thumb_size_loading_lang');	  
+function thumb_size_loading_lang(){
   load_language('plugin.lang', TBS_PATH);
 }
 
