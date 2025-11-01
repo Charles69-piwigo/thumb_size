@@ -9,6 +9,8 @@
 
 
 <table>
+
+
   <tr>
     <td align="left">{'Largeur des miniatures'|@translate} : &nbsp;&nbsp;</td>
     <td><input type="text" size="2" maxlength="3" name="largeur" value="{$LARGEUR}">&nbsp;px</td></td>
@@ -55,10 +57,11 @@
 
 <p>
 
-  <input type="submit" style="width: 150px;" name="submit" value="{'Submit'|@translate}">
-  <input type="submit" style="width: 150px;" name="defaut" value="{'Valeurs par défaut'|@translate}">
+  <input type="submit" style="width: 180px;" name="submit" value="{'Valider sélections'|@translate}">
+</br> </br>  
+  <input type="submit" style="width: 180px;" name="defaut" value="{'Valeurs recommandées'|@translate}">
 </br> </br>
-  <input type="submit" style="width: 180px;" name="reinit" value="{'Reinitialiser'|@translate}">
+  <input type="submit" style="width: 180px;" name="reinit" value="{'Valeurs défaut Piwigo'|@translate}">
 </p>
 </form>
 

@@ -6,12 +6,15 @@ $lang['Qualité image'] = 'Image quality';
 $lang['Aspect des miniatures'] = 'Thumbnail appearance';
 $lang['Redimensionnée'] = 'Resize';
 $lang['Retaillée'] = 'Crop';
-$lang['Dimension popup Album'] = 'popup Album dimensions';
+$lang['Dimensions_Album'] = 'Dimensions of the select an album popup';
 $lang['Largeur'] = 'Width';
 $lang['Hauteur'] = 'Height';
-$lang['Valider'] = 'Submit';
-$lang['Valeurs par défaut'] = 'Default values';
-$lang['Reinitialiser'] = 'Reinit';
+$lang['Valider modifications'] = 'Confirm the changes';
+$lang['Valeurs recommandées'] = 'Recommended values';
+$lang['Valeurs défaut Piwigo'] = 'Default Piwigo values';
+$lang['Gestion_miniatures'] = 'Thumbnail management';
+
+
 
 
 ?>

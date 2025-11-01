@@ -57,6 +57,7 @@ function thumb_perso() {
         $conf['thumb_size'] = unserialize($conf['thumb_size']);
         $largeur = $conf['thumb_size']['largeur'];
         $hauteur = $conf['thumb_size']['hauteur'];
+        $qualite = $conf['thumb_size']['qualite'];
         $dimcrop = $conf['thumb_size']['dimcrop']; 
         $album_la = $conf['thumb_size']['album_la']; 
         $album_ha = $conf['thumb_size']['album_ha']; 
@@ -66,6 +67,7 @@ function thumb_perso() {
         $template->assign(array(
             'LARGEUR' => $largeur,
             'HAUTEUR' => $hauteur,
+            'QUALITE' => $qualite,
             'DIMCROP' => $dimcrop,
             'ALBUM_LA' => $album_la,
             'ALBUM_HA' => $album_ha,
@@ -81,6 +83,50 @@ function thumb_perso() {
     }
 }
 
+
+
+add_event_handler('loc_end_admin', 'tbs_change_batch_thumb_global');
+
+function tbs_change_batch_thumb_global()
+{
+    global $template, $conf, $page;
+
+    // On vérifie qu'on est bien sur la page "Batch Manager global"
+    
+    if (
+        !defined('IN_ADMIN')
+        || empty($page['page'])
+        || $page['page'] !== 'batch_manager'
+        || empty($page['mode'])
+        || $page['mode'] !== 'global'
+    ) {
+        return;
+    }
+        
+
+    // Récupère la config enregistrée par le plugin
+    $params = isset($conf['thumb_size']) ? @unserialize($conf['thumb_size']) : [];
+    if (empty($params['qualite'])) return;
+
+    // Transforme la chaîne ('IMG_MEDIUM', etc.) en constante PHP
+    if (!defined($params['qualite'])) return;
+    $type = constant($params['qualite']);
+
+    // Paramètres d'image selon la qualité choisie
+    $thumb_params = ImageStdParams::get_by_type($type);
+
+    // Récupère les miniatures préparées par la page
+    $images = $template->get_template_vars('thumbnails');
+    if (!is_array($images)) return;
+
+    // Remplace les dérivés "square" par ta version personnalisée
+    foreach ($images as &$img) {
+        $img['derivatives']['square'] = new DerivativeImage($thumb_params, $img['path']);
+    }
+
+    // Réinjecte dans le template
+    $template->assign('thumbnails', $images);
+}
 
 
 

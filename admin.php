@@ -96,33 +96,7 @@ if (isset($_POST['reinit']))
     
     array_push($page['infos'], l10n('Paramètres sauvegardés dans la base de données'));
 
-    //----------------------------------------------------------------------------------
-    // modificationde de batch_manager_global.php
-    // Chemin du fichier à modifier
-        $file_path = TBS_BATCH . 'batch_manager_global.php';
-        //echo $file_path ;
-
-    // Lire le contenu du fichier
-        $file_content = file_get_contents($file_path);
-
-    // valeur à remplacer
-        $val_old = '$thumb_params = ImageStdParams::get_by_type('.$qualite_old.');' ;
-        //echo $val_old ;
-
-        $val_new = '$thumb_params = ImageStdParams::get_by_type(IMG_SQUARE);' ;
-        //echo $val_new ;
-
-    // Remplacer old par new
-    if ($val_new !== $val_old) {
-
-        $file_content_modifie = str_replace($val_old, $val_new, $file_content);
-
-        // Réécrire le fichier avec la modification
-        file_put_contents($file_path, $file_content_modifie);
-        //echo "Fichier modifié avec succès.";
-    }
     
-  
 
 
 }
