@@ -3,10 +3,7 @@
   margin-left: 0 !important;
   text-align: left !important;
 }
-#thumb_batch_size input[type='submit'] {
-  margin-left: 0 !important;
-  display: block;
-}
+
 </style>
 
 <div class="titrePage">
@@ -68,11 +65,11 @@
 
 <p style="text-align: left; margin-left: 0;">
 
-  <input type="submit" name="submit" value="{'Valider sélections'|@translate}">
+  <input type="submit" style="width: 180px !important;" name="submit" value="{'Valider'|@translate}">
 </br> </br>  
-  <input type="submit" name="defaut" value="{'Valeurs recommandées'|@translate}">
+  <input type="submit" style="width: 180px !important;" name="defaut" value="{'Valeurs_ok'|@translate}">
 </br> </br>
-  <input type="submit" name="reinit" value="{'Valeurs défaut Piwigo'|@translate}">
+  <input type="submit" style="width: 180px !important;" name="reinit" value="{'Valeurs_piwigo'|@translate}">
 </p>
 </form>
 

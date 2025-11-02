@@ -55,19 +55,20 @@ function thumb_size_loading_lang(){
 }
 
 // SCRIPT =======================================================================================
-// ajoute css
+/*
 
-add_event_handler('loc_begin_page_tail', 'thumb_add_css');
+add_event_handler('loc_begin_page_header', 'thumb_add_css');
 function thumb_add_css()
 {
     global $page, $template;
     //print_r($page) ;
     
-    $template->append('footer_elements', '
-    <link rel="stylesheet" href="plugins/thumb_size/thumb.css" />
+    $template->append('head_elements', '
+    <link rel="stylesheet" href="plugins/thumb_size/template/thumb.css" />
     ');
     
 }
+*/    
 
 //ajout dans le header de theAdminPage
 add_event_handler('loc_begin_page_header', 'thumb_perso',20 );

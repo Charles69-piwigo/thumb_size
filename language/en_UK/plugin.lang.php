@@ -9,9 +9,9 @@ $lang['Retaillée'] = 'Crop';
 $lang['Dimensions_Album'] = 'Dimensions of "the select an album" popup';
 $lang['Largeur'] = 'Width';
 $lang['Hauteur'] = 'Height';
-$lang['Valider modifications'] = 'Confirm the changes';
-$lang['Valeurs recommandées'] = 'Recommended values';
-$lang['Valeurs défaut Piwigo'] = 'Default Piwigo values';
+$lang['Valider'] = 'Confirm the changes';
+$lang['Valeurs_ok'] = 'Recommended values';
+$lang['Valeurs_piwigo'] = 'Default Piwigo values';
 $lang['Gestion_miniatures'] = 'Thumbnail management';
 
 
