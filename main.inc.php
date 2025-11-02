@@ -12,6 +12,9 @@ Has Settings: webmaster
 // ============  VERSIONS =========================================================
  // historique des versions
  /*
+  version 2.1 - 02/11/2025
+  corrigé css dans menu de configuration
+  
   version 2.0 - 02/11/2025 (diffusé)
   réécriture complète du code. le fichier batch_manager_global.tpl n'est plus modifié
   réécriture du menu de configuration
@@ -49,6 +52,21 @@ define('TBS_PATH' , PHPWG_PLUGINS_PATH . TBS_DIR . '/');
 add_event_handler('loading_lang', 'thumb_size_loading_lang');	  
 function thumb_size_loading_lang(){
   load_language('plugin.lang', TBS_PATH);
+}
+
+// SCRIPT =======================================================================================
+// ajoute css
+
+add_event_handler('loc_begin_page_tail', 'thumb_add_css');
+function thumb_add_css()
+{
+    global $page, $template;
+    //print_r($page) ;
+    
+    $template->append('footer_elements', '
+    <link rel="stylesheet" href="plugins/thumb_size/thumb.css" />
+    ');
+    
 }
 
 //ajout dans le header de theAdminPage

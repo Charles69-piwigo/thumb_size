@@ -1,3 +1,14 @@
+<style>
+#thumb_batch_size, #thumb_batch_size * {
+  margin-left: 0 !important;
+  text-align: left !important;
+}
+#thumb_batch_size input[type='submit'] {
+  margin-left: 0 !important;
+  display: block;
+}
+</style>
+
 <div class="titrePage">
 <h2>Thumb Batch Size</h2>
 </div>
@@ -7,7 +18,7 @@
 <fieldset id="thumb_batch_size">
 <legend>{'Configuration'|@translate}</legend>
 
-
+<h3>{'Gestion_miniatures'|@translate}</h3>
 <table>
 
 
@@ -39,29 +50,29 @@
     </td>
   </tr>
   
-  <tr>
-    <td align="left">{'Dimension popup Album'|@translate} : &nbsp;&nbsp;</td>
-</tr>
-<tr> 
+</table>
+
+<h3>{'Dimensions_Album'|@translate}</h3>
+<table>
+  <tr> 
     <td align="left">{'Largeur'|@translate} : &nbsp;&nbsp;</td>
     <td><input type="text" size="2" maxlength="3" name="larg" value="{$ALBUM_LA}">&nbsp;px</td>
-</tr>
-<tr>   
+  </tr>
+  <tr>   
     <td align="left">{'Hauteur'|@translate} : &nbsp;&nbsp;</td>
     <td><input type="text" size="2" maxlength="3" name="haut" value="{$ALBUM_HA}">&nbsp;px</td>
-    </td>
   </tr>
-
 </table>
+
 </fieldset>
 
-<p>
+<p style="text-align: left; margin-left: 0;">
 
-  <input type="submit" style="width: 180px;" name="submit" value="{'Valider sélections'|@translate}">
+  <input type="submit" name="submit" value="{'Valider sélections'|@translate}">
 </br> </br>  
-  <input type="submit" style="width: 180px;" name="defaut" value="{'Valeurs recommandées'|@translate}">
+  <input type="submit" name="defaut" value="{'Valeurs recommandées'|@translate}">
 </br> </br>
-  <input type="submit" style="width: 180px;" name="reinit" value="{'Valeurs défaut Piwigo'|@translate}">
+  <input type="submit" name="reinit" value="{'Valeurs défaut Piwigo'|@translate}">
 </p>
 </form>
 
