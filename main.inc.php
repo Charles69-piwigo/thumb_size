@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: thumb_size
-Version: 1.1
+Version: 2.0
 Description: Choisir la dimension et la qualité des vignettes dans la gestion par lot
 Plugin URI:
 Author: Charles69
@@ -12,6 +12,9 @@ Has Settings: webmaster
 // ============  VERSIONS =========================================================
  // historique des versions
  /*
+  version 2.0 - 02/11/2025 (diffusé)
+  réécriture complète du code. le fichier batch_manager_global.tpl n'est plus modifié
+  réécriture du menu de configuration
 
   version 1.1 - 09/04/2025 (diffusé)
   corrigé conflit avec le plugin Add_head_element
