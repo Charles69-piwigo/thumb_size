@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: thumb_size
-Version: 2.0
+Version: 2.1
 Description: Choisir la dimension et la qualité des vignettes dans la gestion par lot
 Plugin URI:
 Author: Charles69
