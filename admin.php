@@ -53,22 +53,7 @@ function save_config($params) {
     conf_update_param('thumb_size', serialize($params));
     array_push($page['infos'], l10n('Paramètres sauvegardés dans la base de données'));
 }
-/*
-function save_config($params) {
-    global $page;
-    
-    $serialized = pwg_db_real_escape_string(serialize($params));
-    
-    $query = '
-        UPDATE ' . CONFIG_TABLE . '
-        SET value = "' . $serialized . '"
-        WHERE param = "thumb_size"
-        LIMIT 1';
-    
-    pwg_query($query);
-    array_push($page['infos'], l10n('Paramètres sauvegardés dans la base de données'));
-}
-*/
+
 //========================================================================
 // Sauvegarde de la configuration
 //==========================================================================
@@ -100,13 +85,6 @@ if (isset($_POST['defaut']))
 }
 
 //========================================================================
-
-
-
-
-
-
-//========================================================================
 // Configuration du template
 //========================================================================
 
@@ -124,4 +102,5 @@ $template->assign(
 // Affichage de la page de configuration
 $template->set_filenames(array('plugin_admin_content' => dirname(__FILE__) . '/template/admin.tpl'));
 $template->assign_var_from_handle('ADMIN_CONTENT', 'plugin_admin_content');
+
 ?>

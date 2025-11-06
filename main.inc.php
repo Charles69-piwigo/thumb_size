@@ -14,7 +14,7 @@ Has Settings: webmaster
  /*
   version 2.2 - 06/11/2025  
   le fichier batch_manager_global.tpl n'est plus modifié , cette fois c'est sûr ;)
-  utilisation de conf_update_param() conf_delete_param()
+  utilisation de conf_update_param() conf_delete_param() safe_unserialize()
 
   version 2.1 - 02/11/2025
   corrigé css dans menu de configuration
@@ -72,7 +72,7 @@ function thumb_perso() {
         return;
     }
     
-    $params = @unserialize($conf['thumb_size']);
+    $params = safe_unserialize($conf['thumb_size']);
     if (!is_array($params)) {
         return;
     }
@@ -108,7 +108,7 @@ function mon_plugin_modifier_thumbnails() {
     global $template, $conf;
     
     // Récupérer les paramètres depuis la base de données
-    $params = @unserialize($conf['thumb_size']);
+    $params = safe_unserialize($conf['thumb_size']);
     
     // Définir le type de dérivative
     $derivative_type = IMG_SQUARE; // valeur par défaut
