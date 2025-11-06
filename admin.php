@@ -2,10 +2,6 @@
 
 if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 
-
-define('TBS_BATCH' , get_root_url().'admin/');
-//echo TBS_BATCH ;
-
 global $template, $conf, $page;
 
 load_language('plugin.lang', TBS_PATH);
@@ -20,135 +16,88 @@ $template->assign('qualite_op', [
 include(dirname(__FILE__).'/install/config_default.inc.php');
 include(dirname(__FILE__).'/install/config_init.inc.php');
 
+// Récupération de la configuration actuelle
 $params = isset($conf['thumb_size']) ? @unserialize($conf['thumb_size']) : [];
-//echo print_r($params) ;
+if (!is_array($params)) {
+    $params = $config_default;
+}
 
-$qualite_old = $params['qualite'];
-//echo $qualite_old ;
+// Fonction de validation des paramètres
+function validate_params($input_params, $config_default) {
+    $valid_qualities = ['IMG_SQUARE', 'IMG_SMALL', 'IMG_MEDIUM', 'IMG_LARGE'];
+    $valid_dimcrop = ['contain', 'cover'];
+    
+    $params = array(
+        'largeur' => isset($input_params['largeur']) ? intval($input_params['largeur']) : $config_default['largeur'],
+        'hauteur' => isset($input_params['hauteur']) ? intval($input_params['hauteur']) : $config_default['hauteur'],
+        'qualite' => isset($input_params['qualite']) && in_array($input_params['qualite'], $valid_qualities) 
+                     ? $input_params['qualite'] : $config_default['qualite'],
+        'dimcrop' => isset($input_params['dimcrop']) && in_array($input_params['dimcrop'], $valid_dimcrop)
+                     ? $input_params['dimcrop'] : $config_default['dimcrop'],
+        'album_la' => isset($input_params['larg']) ? intval($input_params['larg']) : $config_default['album_la'],
+        'album_ha' => isset($input_params['haut']) ? intval($input_params['haut']) : $config_default['album_ha'],
+    );
+    
+    // Limites raisonnables pour les dimensions
+    $params['largeur'] = max(50, min(2000, $params['largeur']));
+    $params['hauteur'] = max(50, min(2000, $params['hauteur']));
+    $params['album_la'] = max(200, min(2000, $params['album_la']));
+    $params['album_ha'] = max(200, min(2000, $params['album_ha']));
+    
+    return $params;
+}
 
+// Fonction de sauvegarde sécurisée
+function save_config($params) {
+    global $page;
+    conf_update_param('thumb_size', serialize($params));
+    array_push($page['infos'], l10n('Paramètres sauvegardés dans la base de données'));
+}
+/*
+function save_config($params) {
+    global $page;
+    
+    $serialized = pwg_db_real_escape_string(serialize($params));
+    
+    $query = '
+        UPDATE ' . CONFIG_TABLE . '
+        SET value = "' . $serialized . '"
+        WHERE param = "thumb_size"
+        LIMIT 1';
+    
+    pwg_query($query);
+    array_push($page['infos'], l10n('Paramètres sauvegardés dans la base de données'));
+}
+*/
 //========================================================================
 // Sauvegarde de la configuration
 //==========================================================================
 
 if (isset($_POST['submit']))
 {
-  $params  = array(
-    'largeur'          => $_POST['largeur'],
-    'hauteur'          => $_POST['hauteur'],
-    'qualite'		       => $_POST['qualite'],
-    'dimcrop'          => $_POST['dimcrop'],
-    'album_la'         => $_POST['larg'],
-    'album_ha'         => $_POST['haut'],
-  );
-
-    $query = '
-    UPDATE ' . CONFIG_TABLE . '
-    SET value="' . addslashes(serialize($params)) . '"
-    WHERE param="thumb_size"
-    LIMIT 1';
-    pwg_query($query);
-    
-    array_push($page['infos'], l10n('Paramètres sauvegardés dans la base de données'));
-
-    //----------------------------------------------------------------------------------
-    // modificationde de batch_manager_global.php
-    // Chemin du fichier à modifier
-        $file_path = TBS_BATCH . 'batch_manager_global.php';
-      //  echo 'chemin= ' , $file_path  ;
-
-    // Lire le contenu du fichier
-        $file_content = file_get_contents($file_path);
-
-    // valeur à remplacer
-        $val_old = '$thumb_params = ImageStdParams::get_by_type('.$qualite_old.');' ;
-        //echo $val_old ;
-
-        $qualite_new = $params['qualite'];
-        $val_new = '$thumb_params = ImageStdParams::get_by_type('.$qualite_new.');' ;
-        //echo $val_new ;
-
-    // Remplacer old par new
-    if ($val_new !== $val_old) {
-
-        $file_content_modifie = str_replace($val_old, $val_new, $file_content);
-        
-        // Réécrire le fichier avec la modification
-        file_put_contents($file_path, $file_content_modifie);
-        //echo "Fichier modifié avec succès.";
-    }
-    
-  
+    $params = validate_params($_POST, $config_default);
+    save_config($params);
 }
 
-//*************************************************************************
-// 
+//========================================================================
+// Réinitialisation aux valeurs par défaut Piwigo
+//========================================================================
 
 if (isset($_POST['reinit']))
 {
-  $params  = $config_init ;
-
-    $query = '
-    UPDATE ' . CONFIG_TABLE . '
-    SET value="' . addslashes(serialize($params)) . '"
-    WHERE param="thumb_size"
-    LIMIT 1';
-    pwg_query($query);
-    
-    array_push($page['infos'], l10n('Paramètres sauvegardés dans la base de données'));
-
-    
-
-
+    $params = $config_init;
+    save_config($params);
 }
 
+//========================================================================
+// Application des valeurs recommandées
 //========================================================================
 
 if (isset($_POST['defaut']))
 {
-  $params  = $config_default ;
-
-    $query = '
-    UPDATE ' . CONFIG_TABLE . '
-    SET value="' . addslashes(serialize($params)) . '"
-    WHERE param="thumb_size"
-    LIMIT 1';
-    pwg_query($query);
-    
-    array_push($page['infos'], l10n('Paramètres sauvegardés dans la base de données'));
-
-    //----------------------------------------------------------------------------------
-    // modificationde de batch_manager_global.php
-    // Chemin du fichier à modifier
-        $file_path = TBS_BATCH . 'batch_manager_global.php';
-        //echo 'chemin= ' , $file_path  ;
-
-    // Lire le contenu du fichier
-        $file_content = file_get_contents($file_path);
-
-    // valeur à remplacer
-        $val_old = '$thumb_params = ImageStdParams::get_by_type('.$qualite_old.');' ;
-        //echo $val_old ;
-
-        $qualite_new = $params['qualite'];
-        $val_new = '$thumb_params = ImageStdParams::get_by_type('.$qualite_new.');' ;
-        //echo $val_new ;
-
-    // Remplacer old par new
-    if ($val_new !== $val_old) {
-
-        $file_content_modifie = str_replace($val_old, $val_new, $file_content);
-        
-        // Réécrire le fichier avec la modification
-        file_put_contents($file_path, $file_content_modifie);
-        //echo "Fichier modifié avec succès.";
-    }
-    
-  
+    $params = $config_default;
+    save_config($params);
 }
-
-
-
-
 
 //========================================================================
 
@@ -157,24 +106,22 @@ if (isset($_POST['defaut']))
 
 
 
+//========================================================================
 // Configuration du template
+//========================================================================
+
 $template->assign(
-  array(
-    'LARGEUR'          => $params['largeur'],
-    'HAUTEUR'          => $params['hauteur'],
-    'QUALITE'		       => $params['qualite'],
-    'DIMCROP'  		     => $params['dimcrop'],
-    'ALBUM_LA'  		   => $params['album_la'],
-    'ALBUM_HA'  		   => $params['album_ha'],
-    
-  )
+    array(
+        'LARGEUR'    => isset($params['largeur']) ? $params['largeur'] : $config_default['largeur'],
+        'HAUTEUR'    => isset($params['hauteur']) ? $params['hauteur'] : $config_default['hauteur'],
+        'QUALITE'    => isset($params['qualite']) ? $params['qualite'] : $config_default['qualite'],
+        'DIMCROP'    => isset($params['dimcrop']) ? $params['dimcrop'] : $config_default['dimcrop'],
+        'ALBUM_LA'   => isset($params['album_la']) ? $params['album_la'] : $config_default['album_la'],
+        'ALBUM_HA'   => isset($params['album_ha']) ? $params['album_ha'] : $config_default['album_ha'],
+    )
 );
 
-
-/// affichage de la page configuration
+// Affichage de la page de configuration
 $template->set_filenames(array('plugin_admin_content' => dirname(__FILE__) . '/template/admin.tpl'));
 $template->assign_var_from_handle('ADMIN_CONTENT', 'plugin_admin_content');
-
-
-// --------------------------------------------------
 ?>
