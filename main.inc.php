@@ -130,6 +130,9 @@ function mon_plugin_modifier_thumbnails() {
             case 'IMG_LARGE':
             case IMG_LARGE:
                 $derivative_type = IMG_LARGE;
+            case 'IMG_XLARGE':
+            case IMG_XLARGE:
+                $derivative_type = IMG_XLARGE;    
                 break;
         }
     }

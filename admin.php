@@ -10,7 +10,8 @@ $template->assign('qualite_op', [
     ['value' => 'IMG_SQUARE', 'label' => 'IMG_SQUARE 120x120'],
     ['value' => 'IMG_SMALL',  'label' => 'IMG_SMALL  576x432'],
     ['value' => 'IMG_MEDIUM', 'label' => 'IMG_MEDIUM 792x594'],
-    ['value' => 'IMG_LARGE',  'label' => 'IMG_LARGE 1008x756']
+    ['value' => 'IMG_LARGE',  'label' => 'IMG_LARGE 1008x756'],
+    ['value' => 'IMG_XLARGE',  'label' => 'IMG_XLARGE 1224x918']
 ]);
 
 include(dirname(__FILE__).'/install/config_default.inc.php');
@@ -24,7 +25,7 @@ if (!is_array($params)) {
 
 // Fonction de validation des paramètres
 function validate_params($input_params, $config_default) {
-    $valid_qualities = ['IMG_SQUARE', 'IMG_SMALL', 'IMG_MEDIUM', 'IMG_LARGE'];
+    $valid_qualities = ['IMG_SQUARE', 'IMG_SMALL', 'IMG_MEDIUM', 'IMG_LARGE','IMG_XLARGE'];
     $valid_dimcrop = ['contain', 'cover'];
     
     $params = array(
