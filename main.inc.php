@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: thumb_size
-Version: 2.2
+Version: 2.3a
 Description: Choisir la dimension et la qualité des vignettes dans la gestion par lot
-Plugin URI:
+Plugin URI: https://piwigo.org/ext/extension_view.php?eid=1015
 Author: Charles69
 Author URI:
 Has Settings: webmaster
@@ -12,9 +12,17 @@ Has Settings: webmaster
 // ============  VERSIONS =========================================================
  // historique des versions
  /*
+  version 2.3a - 13/01/2026 
+  déplacement du sélecteur de nombre de photos en haut  
+  corrigé : langue uk par défaut
+
+  version 2.3 - 19/12/2025
+  ajouté Plugin URI pour mise à jour automatique    
+
   version 2.2 - 06/11/2025  
   le fichier batch_manager_global.tpl n'est plus modifié , cette fois c'est sûr ;)
   utilisation de conf_update_param() conf_delete_param() safe_unserialize()
+  ajouté IMG_XLARGE
 
   version 2.1 - 02/11/2025
   corrigé css dans menu de configuration
@@ -50,11 +58,14 @@ define('TBS_DIR', basename(dirname(__FILE__)));
 define('TBS_PATH', PHPWG_PLUGINS_PATH . TBS_DIR . '/');
 
 
-// Gestion des langues
-add_event_handler('loading_lang', 'thumb_size_loading_lang');
-function thumb_size_loading_lang() {
-    load_language('plugin.lang', TBS_PATH);
-}
+//===================== CHARGEMENT DES LANGUES , UK PAR DEFAUT ==================
+// Charger d'abord l'anglais comme base
+load_language('plugin.lang', TBS_PATH, array('language' => 'en_UK', 'no_fallback' => true));
+
+// Puis charger la langue de l'utilisateur (qui écrasera l'anglais si c'est du français)
+load_language('plugin.lang', TBS_PATH);
+
+
 
 //=====================================================================================
 add_event_handler('loc_begin_page_header', 'thumb_perso', 20);
@@ -95,16 +106,31 @@ function thumb_perso() {
         $template->append('head_elements', $template->get_template_vars('thumb_header_content'));
     }
 
-//echo "<!-- DEBUG: qualité {$params['qualite']} -->\n";
 
+// Déplacer le sélecteur de pagination (sur l'onglet global - par défaut ou explicite)
+if (!isset($_GET['mode']) || $_GET['mode'] === 'global') {
+    $js_move_pagination = '
+    <style>
+    .pagination-per-page {
+        margin-top: 15px;
+    }
+    </style>
+    <script>
+    jQuery(document).ready(function($) {
+        $(\'.pagination-per-page\').insertAfter(\'.filterActions\');
+    });
+    </script>
+    ';
+    $template->append('head_elements', $js_move_pagination);
+}
 
 }
 
 //==============================================================================================
 
-add_event_handler('loc_end_element_set_global', 'mon_plugin_modifier_thumbnails');
+add_event_handler('loc_end_element_set_global', 'thumb_size_modifier_thumbnails');
 
-function mon_plugin_modifier_thumbnails() {
+function thumb_size_modifier_thumbnails() {
     global $template, $conf;
     
     // Récupérer les paramètres depuis la base de données

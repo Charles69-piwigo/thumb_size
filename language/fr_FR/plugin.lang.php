@@ -13,6 +13,7 @@ $lang['Valider'] = 'Valider les modifications';
 $lang['Valeurs_ok'] = 'Valeurs recommandées';
 $lang['Valeurs_piwigo'] = 'Valeur défaut Piwigo';
 $lang['Gestion_miniatures'] = 'Gestion des miniatures';
+$lang['Configuration'] = 'Configuration';
 
 
 

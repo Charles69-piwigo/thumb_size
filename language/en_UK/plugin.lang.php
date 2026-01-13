@@ -13,6 +13,7 @@ $lang['Valider'] = 'Confirm the changes';
 $lang['Valeurs_ok'] = 'Recommended values';
 $lang['Valeurs_piwigo'] = 'Default Piwigo values';
 $lang['Gestion_miniatures'] = 'Thumbnail management';
+$lang['Configuration'] = 'Configuration';
 
 
 
