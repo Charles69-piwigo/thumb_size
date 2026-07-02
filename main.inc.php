@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: thumb_size
-Version: 2.3a
+Version: auto
 Description: Choisir la dimension et la qualité des vignettes dans la gestion par lot
 Plugin URI: https://piwigo.org/ext/extension_view.php?eid=1015
 Author: Charles69
